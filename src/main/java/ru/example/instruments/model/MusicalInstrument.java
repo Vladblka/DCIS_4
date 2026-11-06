@@ -1,14 +1,40 @@
 package ru.example.instruments.model;
 
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.math.BigDecimal;
 
 public class MusicalInstrument {
     private Long id;
+
+    @NotBlank(message = "Укажите название инструмента")
+    @Size(max = 120, message = "Название не должно быть длиннее 120 символов")
     private String name;
+
+    @NotBlank(message = "Укажите бренд")
+    @Size(max = 120, message = "Бренд не должен быть длиннее 120 символов")
     private String brand;
+
+    @NotBlank(message = "Укажите тип инструмента")
+    @Size(max = 80, message = "Тип инструмента не должен быть длиннее 80 символов")
     private String instrumentType;
+
+    @NotBlank(message = "Укажите материал")
+    @Size(max = 120, message = "Материал не должен быть длиннее 120 символов")
     private String material;
+
+    @NotNull(message = "Укажите цену")
+    @DecimalMin(value = "0.0", message = "Цена не может быть отрицательной")
+    @Digits(integer = 10, fraction = 2, message = "Цена: не более 10 цифр до запятой и 2 после")
     private BigDecimal price;
+
+    @NotNull(message = "Укажите количество")
+    @Min(value = 0, message = "Количество не может быть отрицательным")
     private Integer quantity;
 
     public MusicalInstrument() {

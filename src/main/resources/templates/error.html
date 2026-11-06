@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('Ошибка')}"></head>
+<body>
+<header th:replace="~{fragments/common :: header}"></header>
+
+<main class="container narrow">
+    <div class="card error-page">
+        <h1>Ошибка <span th:text="${status}">404</span></h1>
+        <p th:if="${message}" th:text="${message}">Описание ошибки</p>
+        <p th:unless="${message}" th:text="${error}">Not Found</p>
+        <p class="hint">Проверьте адрес страницы или вернитесь на главную.</p>
+        <a class="btn btn-primary" th:href="@{/}">На главную</a>
+    </div>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('Запись')}"></head>
+<body>
+<header th:replace="~{fragments/common :: header}"></header>
+<div th:replace="~{fragments/common :: alerts}"></div>
+
+<main class="container narrow">
+    <div class="card">
+        <h1 th:text="${instrument.id == null} ? 'Добавление записи' : 'Редактирование записи'">Добавление записи</h1>
+        <p class="hint">
+            Все поля обязательны. Цена — неотрицательное число
+            (дробная часть отделяется точкой или запятой), количество — целое неотрицательное число.
+        </p>
+
+        <form method="post" th:object="${instrument}"
+              th:action="${instrument.id == null} ? @{/instruments} : @{/instruments/{id}(id=${instrument.id})}">
+            <div class="alert alert-error" th:if="${#fields.hasAnyErrors()}">
+                Проверьте заполнение полей — ниже указаны ошибки.
+            </div>
+
+            <div class="field">
+                <label for="name">Название</label>
+                <input id="name" type="text" th:field="*{name}" placeholder="Например, Stratocaster"
+                       th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" autofocus>
+                <p class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Ошибка</p>
+            </div>
+
+            <div class="field">
+                <label for="brand">Бренд</label>
+                <input id="brand" type="text" th:field="*{brand}" placeholder="Например, Fender"
+                       th:classappend="${#fields.hasErrors('brand')} ? 'is-invalid'">
+                <p class="field-error" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}">Ошибка</p>
+            </div>
+
+            <div class="field">
+                <label for="instrumentType">Тип инструмента</label>
+                <input id="instrumentType" type="text" th:field="*{instrumentType}" placeholder="Например, гитара"
+                       th:classappend="${#fields.hasErrors('instrumentType')} ? 'is-invalid'">
+                <p class="field-error" th:if="${#fields.hasErrors('instrumentType')}" th:errors="*{instrumentType}">Ошибка</p>
+            </div>
+
+            <div class="field">
+                <label for="material">Материал</label>
+                <input id="material" type="text" th:field="*{material}" placeholder="Например, ольха"
+                       th:classappend="${#fields.hasErrors('material')} ? 'is-invalid'">
+                <p class="field-error" th:if="${#fields.hasErrors('material')}" th:errors="*{material}">Ошибка</p>
+            </div>
+
+            <div class="field-row">
+                <div class="field">
+                    <label for="price">Цена, ₽</label>
+                    <input id="price" type="text" inputmode="decimal" th:field="*{price}" placeholder="85000.50"
+                           th:classappend="${#fields.hasErrors('price')} ? 'is-invalid'">
+                    <p class="field-error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Ошибка</p>
+                </div>
+
+                <div class="field">
+                    <label for="quantity">Количество, шт.</label>
+                    <input id="quantity" type="text" inputmode="numeric" th:field="*{quantity}" placeholder="3"
+                           th:classappend="${#fields.hasErrors('quantity')} ? 'is-invalid'">
+                    <p class="field-error" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}">Ошибка</p>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button class="btn btn-primary" type="submit"
+                        th:text="${instrument.id == null} ? 'Добавить' : 'Сохранить изменения'">Добавить</button>
+                <a class="btn" th:href="@{/instruments}">Отмена</a>
+            </div>
+        </form>
+    </div>
+</main>
+
+</body>
+</html>

@@ -6,6 +6,7 @@ import ru.example.instruments.model.MusicalInstrument;
 import ru.example.instruments.repository.MusicalInstrumentRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -18,6 +19,7 @@ public class MusicalInstrumentService {
 
     public MusicalInstrument add(MusicalInstrument instrument) { return repository.save(instrument); }
     public List<MusicalInstrument> all() { return repository.findAll(); }
+    public Optional<MusicalInstrument> find(long id) { return repository.findById(id); }
     public List<MusicalInstrument> searchByBrand(String brand) { return repository.findByBrand(brand); }
     public boolean update(MusicalInstrument instrument) { return repository.update(instrument) > 0; }
     public boolean delete(long id) { return repository.deleteById(id) > 0; }

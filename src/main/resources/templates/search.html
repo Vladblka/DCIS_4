@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('Поиск')}"></head>
+<body>
+<header th:replace="~{fragments/common :: header}"></header>
+<div th:replace="~{fragments/common :: alerts}"></div>
+
+<main class="container">
+    <h1>Поиск по бренду</h1>
+    <p class="hint">Введите часть названия бренда — регистр не важен.</p>
+
+    <form class="search-form" method="get" th:action="@{/instruments/search}">
+        <input type="text" name="brand" th:value="${brand}" placeholder="Например, fen" autofocus>
+        <button class="btn btn-primary" type="submit">Найти</button>
+        <a class="btn" th:href="@{/instruments/search}">Сбросить</a>
+    </form>
+
+    <div th:if="${instruments != null}">
+        <div class="card" th:if="${!#lists.isEmpty(instruments)}">
+            <p class="hint">Найдено записей: <strong th:text="${#lists.size(instruments)}">1</strong></p>
+            <div class="table-wrap">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Название</th>
+                        <th>Бренд</th>
+                        <th>Тип</th>
+                        <th>Материал</th>
+                        <th class="num">Цена</th>
+                        <th class="num">Кол-во</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${instruments}">
+                        <td th:text="${item.id}">1</td>
+                        <td th:text="${item.name}">Stratocaster</td>
+                        <td th:text="${item.brand}">Fender</td>
+                        <td th:text="${item.instrumentType}">гитара</td>
+                        <td th:text="${item.material}">ольха</td>
+                        <td class="num" th:text="${#numbers.formatDecimal(item.price, 1, 2)}">85 000,50</td>
+                        <td class="num" th:text="${item.quantity}">3</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card empty" th:if="${#lists.isEmpty(instruments)}">
+            <p>По запросу «<span th:text="${brand}">fen</span>» ничего не найдено.</p>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.example.instruments.model.MusicalInstrument;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class MusicalInstrumentRepository {
@@ -32,6 +33,12 @@ public class MusicalInstrumentRepository {
 
     public List<MusicalInstrument> findAll() {
         return jdbcTemplate.query("SELECT * FROM musical_instruments ORDER BY id", mapper);
+    }
+
+    public Optional<MusicalInstrument> findById(long id) {
+        return jdbcTemplate.query("SELECT * FROM musical_instruments WHERE id = ?", mapper, id)
+                .stream()
+                .findFirst();
     }
 
     public List<MusicalInstrument> findByBrand(String brand) {

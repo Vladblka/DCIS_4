@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(pageTitle)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${pageTitle} + ' — Учёт музыкальных инструментов'">Учёт музыкальных инструментов</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="site-header" th:fragment="header">
+    <div class="container header-inner">
+        <a class="logo" th:href="@{/}">Инструменты</a>
+        <nav class="nav">
+            <a th:href="@{/instruments}">Все записи</a>
+            <a th:href="@{/instruments/new}">Добавить</a>
+            <a th:href="@{/instruments/edit}">Изменить</a>
+            <a th:href="@{/instruments/delete}">Удалить</a>
+            <a th:href="@{/instruments/search}">Поиск</a>
+        </nav>
+    </div>
+</header>
+
+<div class="container" th:fragment="alerts">
+    <div class="alert alert-success" th:if="${message}" th:text="${message}">Запись сохранена.</div>
+    <div class="alert alert-error" th:if="${error}" th:text="${error}">Ошибка.</div>
+</div>
+
+</body>
+</html>

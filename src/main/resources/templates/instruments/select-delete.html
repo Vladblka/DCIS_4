@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('Удаление записи')}"></head>
+<body>
+<header th:replace="~{fragments/common :: header}"></header>
+<div th:replace="~{fragments/common :: alerts}"></div>
+
+<main class="container">
+    <h1>Удаление записи</h1>
+    <p class="hint">Выберите запись из таблицы — откроется страница подтверждения удаления.</p>
+
+    <div class="card" th:if="${!#lists.isEmpty(instruments)}">
+        <div class="table-wrap">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Название</th>
+                    <th>Бренд</th>
+                    <th>Тип</th>
+                    <th class="actions-col">Действие</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${instruments}">
+                    <td th:text="${item.id}">1</td>
+                    <td th:text="${item.name}">Stratocaster</td>
+                    <td th:text="${item.brand}">Fender</td>
+                    <td th:text="${item.instrumentType}">гитара</td>
+                    <td class="actions">
+                        <a class="btn btn-small btn-danger" th:href="@{/instruments/{id}/delete(id=${item.id})}">Удалить</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card empty" th:if="${#lists.isEmpty(instruments)}">
+        <p>Записей пока нет — удалять нечего.</p>
+        <a class="btn btn-primary" th:href="@{/instruments/new}">Добавить запись</a>
+    </div>
+</main>
+
+</body>
+</html>

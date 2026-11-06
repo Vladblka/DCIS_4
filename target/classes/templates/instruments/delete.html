@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('Удаление записи')}"></head>
+<body>
+<header th:replace="~{fragments/common :: header}"></header>
+
+<main class="container narrow">
+    <div class="card">
+        <h1>Удаление записи №<span th:text="${instrument.id}">1</span></h1>
+        <p>Вы действительно хотите удалить эту запись? Действие нельзя отменить.</p>
+
+        <dl class="details">
+            <dt>Название</dt>
+            <dd th:text="${instrument.name}">Stratocaster</dd>
+            <dt>Бренд</dt>
+            <dd th:text="${instrument.brand}">Fender</dd>
+            <dt>Тип</dt>
+            <dd th:text="${instrument.instrumentType}">гитара</dd>
+            <dt>Материал</dt>
+            <dd th:text="${instrument.material}">ольха</dd>
+            <dt>Цена</dt>
+            <dd th:text="${#numbers.formatDecimal(instrument.price, 1, 2)}">85 000,50</dd>
+            <dt>Количество</dt>
+            <dd th:text="${instrument.quantity}">3</dd>
+        </dl>
+
+        <form method="post" th:action="@{/instruments/{id}/delete(id=${instrument.id})}">
+            <div class="form-actions">
+                <button class="btn btn-danger" type="submit">Удалить запись</button>
+                <a class="btn" th:href="@{/instruments/delete}">Отмена</a>
+            </div>
+        </form>
+    </div>
+</main>
+
+</body>
+</html>
