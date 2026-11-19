@@ -398,6 +398,50 @@ a {
     box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
 }
 
+/* Пользователь в шапке */
+
+.user-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #c7d2fe;
+    font-size: 14px;
+}
+
+.user-box strong {
+    color: #ffffff;
+}
+
+.role-badge {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 2px 9px;
+    border-radius: 999px;
+    background: #4338ca;
+    color: #e0e7ff;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.role-badge.role-user {
+    background: #0369a1;
+    color: #e0f2fe;
+}
+
+.logout-form {
+    margin: 0;
+}
+
+.auth-links {
+    display: flex;
+    gap: 8px;
+}
+
+.auth-card {
+    max-width: 460px;
+    margin: 0 auto;
+}
+
 /* Ошибка */
 
 .error-page {

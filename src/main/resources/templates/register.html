@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('Регистрация')}"></head>
+<body>
+<header th:replace="~{fragments/common :: header}"></header>
+
+<main class="container narrow">
+    <div class="card auth-card">
+        <h1>Регистрация</h1>
+        <p class="hint">
+            Придумайте логин и пароль. Новому пользователю автоматически присваивается роль «Пользователь».
+        </p>
+
+        <form method="post" th:action="@{/register}" th:object="${form}">
+            <div class="alert alert-error" th:if="${#fields.hasAnyErrors()}">
+                Проверьте заполнение полей — ниже указаны ошибки.
+            </div>
+
+            <div class="field">
+                <label for="username">Логин</label>
+                <input id="username" type="text" th:field="*{username}" autofocus autocomplete="username"
+                       placeholder="От 3 до 60 латинских букв, цифр или _"
+                       th:classappend="${#fields.hasErrors('username')} ? 'is-invalid'">
+                <p class="field-error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Ошибка</p>
+            </div>
+
+            <div class="field">
+                <label for="password">Пароль</label>
+                <input id="password" type="password" th:field="*{password}" autocomplete="new-password"
+                       th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'">
+                <p class="field-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Ошибка</p>
+            </div>
+
+            <div class="field">
+                <label for="confirmPassword">Повторите пароль</label>
+                <input id="confirmPassword" type="password" th:field="*{confirmPassword}" autocomplete="new-password"
+                       th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'">
+                <p class="field-error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">Ошибка</p>
+            </div>
+
+            <div class="form-actions">
+                <button class="btn btn-primary" type="submit">Зарегистрироваться</button>
+                <a class="btn" th:href="@{/login}">У меня есть аккаунт</a>
+            </div>
+        </form>
+    </div>
+</main>
+
+</body>
+</html>

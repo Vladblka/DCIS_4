@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{fragments/common :: head('Все записи')}"></head>
 <body>
 <header th:replace="~{fragments/common :: header}"></header>
@@ -11,7 +12,7 @@
             <h1>Все записи</h1>
             <p class="hint">Таблица музыкальных инструментов, сохранённых в базе данных.</p>
         </div>
-        <a class="btn btn-primary" th:href="@{/instruments/new}">+ Добавить запись</a>
+        <a sec:authorize="hasRole('ADMIN')" class="btn btn-primary" th:href="@{/instruments/new}">+ Добавить запись</a>
     </div>
 
     <div class="card" th:if="${!#lists.isEmpty(instruments)}">
@@ -26,7 +27,7 @@
                     <th>Материал</th>
                     <th class="num">Цена</th>
                     <th class="num">Кол-во</th>
-                    <th class="actions-col">Действия</th>
+                    <th sec:authorize="hasRole('ADMIN')" class="actions-col">Действия</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -38,7 +39,7 @@
                     <td th:text="${item.material}">ольха</td>
                     <td class="num" th:text="${#numbers.formatDecimal(item.price, 1, 2)}">85 000,50</td>
                     <td class="num" th:text="${item.quantity}">3</td>
-                    <td class="actions">
+                    <td sec:authorize="hasRole('ADMIN')" class="actions">
                         <a class="btn btn-small" th:href="@{/instruments/{id}/edit(id=${item.id})}">Изменить</a>
                         <a class="btn btn-small btn-danger" th:href="@{/instruments/{id}/delete(id=${item.id})}">Удалить</a>
                     </td>
@@ -50,7 +51,7 @@
 
     <div class="card empty" th:if="${#lists.isEmpty(instruments)}">
         <p>Записей пока нет.</p>
-        <a class="btn btn-primary" th:href="@{/instruments/new}">Добавить первую запись</a>
+        <a sec:authorize="hasRole('ADMIN')" class="btn btn-primary" th:href="@{/instruments/new}">Добавить первую запись</a>
     </div>
 </main>
 

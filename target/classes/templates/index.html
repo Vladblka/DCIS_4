@@ -1,28 +1,41 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{fragments/common :: head('Главная')}"></head>
 <body>
 <header th:replace="~{fragments/common :: header}"></header>
 
 <main class="container">
-    <h1>Учёт музыкальных инструментов</h1>
-    <p class="hint">Добро пожаловать! Выберите нужный раздел.</p>
+    <div sec:authorize="isAuthenticated()">
+        <h1>Здравствуйте, <span sec:authentication="principal.username">user</span>!</h1>
+        <p class="hint" sec:authorize="hasRole('ADMIN')">
+            Вы вошли как администратор: доступны просмотр, добавление, редактирование и удаление записей.
+        </p>
+        <p class="hint" sec:authorize="hasRole('USER')">
+            Вы вошли как пользователь: доступны просмотр записей и поиск по бренду.
+        </p>
+    </div>
+
+    <div sec:authorize="!isAuthenticated()">
+        <h1>Учёт музыкальных инструментов</h1>
+        <p class="hint">Войдите или зарегистрируйтесь, чтобы начать работу.</p>
+    </div>
 
     <div class="cards">
         <a class="card card-link" th:href="@{/instruments}">
             <h2>Все записи</h2>
         </a>
-        <a class="card card-link" th:href="@{/instruments/new}">
-            <h2>Добавить запись</h2>
-        </a>
-        <a class="card card-link" th:href="@{/instruments/edit}">
-            <h2>Изменить запись</h2>
-        </a>
-        <a class="card card-link" th:href="@{/instruments/delete}">
-            <h2>Удалить запись</h2>
-        </a>
         <a class="card card-link" th:href="@{/instruments/search}">
             <h2>Поиск по бренду</h2>
+        </a>
+        <a sec:authorize="hasRole('ADMIN')" class="card card-link" th:href="@{/instruments/new}">
+            <h2>Добавить запись</h2>
+        </a>
+        <a sec:authorize="hasRole('ADMIN')" class="card card-link" th:href="@{/instruments/edit}">
+            <h2>Изменить запись</h2>
+        </a>
+        <a sec:authorize="hasRole('ADMIN')" class="card card-link" th:href="@{/instruments/delete}">
+            <h2>Удалить запись</h2>
         </a>
     </div>
 </main>

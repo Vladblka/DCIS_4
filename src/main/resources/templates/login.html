@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('Вход')}"></head>
+<body>
+<header th:replace="~{fragments/common :: header}"></header>
+
+<main class="container narrow">
+    <div class="card auth-card">
+        <h1>Вход</h1>
+        <p class="hint">Введите логин и пароль.</p>
+
+        <div class="alert alert-error" th:if="${param.error}">
+            Неверный логин или пароль.
+        </div>
+        <div class="alert alert-success" th:if="${param.logout}">
+            Вы вышли из системы.
+        </div>
+        <div class="alert alert-success" th:if="${message}" th:text="${message}">
+            Регистрация завершена.
+        </div>
+
+        <form method="post" th:action="@{/login}">
+            <div class="field">
+                <label for="username">Логин</label>
+                <input id="username" type="text" name="username" autofocus autocomplete="username">
+            </div>
+            <div class="field">
+                <label for="password">Пароль</label>
+                <input id="password" type="password" name="password" autocomplete="current-password">
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-primary" type="submit">Войти</button>
+                <a class="btn" th:href="@{/register}">Регистрация</a>
+            </div>
+        </form>
+    </div>
+</main>
+
+</body>
+</html>

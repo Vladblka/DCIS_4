@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head(pageTitle)">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,13 +11,30 @@
 <header class="site-header" th:fragment="header">
     <div class="container header-inner">
         <a class="logo" th:href="@{/}">Инструменты</a>
-        <nav class="nav">
+        <nav class="nav" sec:authorize="isAuthenticated()">
             <a th:href="@{/instruments}">Все записи</a>
-            <a th:href="@{/instruments/new}">Добавить</a>
-            <a th:href="@{/instruments/edit}">Изменить</a>
-            <a th:href="@{/instruments/delete}">Удалить</a>
             <a th:href="@{/instruments/search}">Поиск</a>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/instruments/new}">Добавить</a>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/instruments/edit}">Изменить</a>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/instruments/delete}">Удалить</a>
         </nav>
+
+        <div class="user-box">
+            <span sec:authorize="isAuthenticated()">
+                Привет, <strong sec:authentication="principal.username">user</strong>
+                <span class="role-badge" sec:authorize="hasRole('ADMIN')">Администратор</span>
+                <span class="role-badge role-user" sec:authorize="hasRole('USER')">Пользователь</span>
+            </span>
+
+            <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post" class="logout-form">
+                <button class="btn btn-small" type="submit">Выйти</button>
+            </form>
+
+            <span sec:authorize="!isAuthenticated()" class="auth-links">
+                <a class="btn btn-small" th:href="@{/login}">Войти</a>
+                <a class="btn btn-small btn-primary" th:href="@{/register}">Регистрация</a>
+            </span>
+        </div>
     </div>
 </header>
 
